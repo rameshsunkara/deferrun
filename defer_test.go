@@ -10,10 +10,7 @@ import (
 
 func TestNewSignalHandler(t *testing.T) {
 	sHandler := deferrun.NewSignalHandler()
-	_, ok := sHandler.(deferrun.SignalHandler)
-	if !ok {
-		t.Errorf("Expected implemenation of deferrun.SignalHandler")
-	}
+
 	sHandlerValue := reflect.Indirect(reflect.ValueOf(sHandler))
 	signals := sHandlerValue.FieldByName("signals")
 	if 3 != signals.Len() {
@@ -53,5 +50,5 @@ func TestOnSignal(t *testing.T) {
 		t.Errorf("Expected 2 deferred functions but got: %d", deferredFuncs.Len())
 	}
 
-	// syscall.Kill(syscall.Getpid(), syscall.SIGTERM)
+	// syscall.Kill(syscall.Getpid(), syscall.SIGINT)
 }
